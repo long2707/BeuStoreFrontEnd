@@ -41,7 +41,7 @@ const Login: React.FC = () => {
           <TextFieldInput type="text" name="email" placeholder="Nhập email" />
           <div className="mt-[24px]">
             <TextFieldInput
-              type={showIcon ? 'text' : 'password'}
+              type={showIcon ? 'text ' : 'password'}
               name="password"
               placeholder="Nhập mật khẩu"
               icon={showIcon ? <BsEyeFill /> : <BsEyeSlashFill />}
