@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 function withAuth (req: NextRequest) {
     let token = req.cookies.get("token");
+    
     if (!token) {
         return NextResponse.redirect(new URL("/admin/login", req.url));
     }

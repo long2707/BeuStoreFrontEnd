@@ -1,9 +1,12 @@
 import React from 'react'
+import AdminLayout from '@/components/Layout/AdminLayout'
 
-type Props = {}
-
-const Dashboard = (props: Props) => {
-  return <div>Dashboard</div>
+const Dashboard = () => {
+  return (
+    <AdminLayout>
+      <div>Dashboard</div>
+    </AdminLayout>
+  )
 }
 
 export default Dashboard
