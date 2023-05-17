@@ -9,12 +9,18 @@ import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { cookies } from 'next/headers'
-
+import axiosClient from '@/libs/axiosClient'
+import { useRouter } from 'next/router'
+import { GetServerSideProps } from 'next'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 interface IFormValue {
   email: string
   password: string
 }
-
+interface DecodedToken extends JwtPayload {
+  role: string
+  // Add other properties from your JWT payload if needed
+}
 const schema = yup.object({
   email: yup
     .string()
@@ -23,10 +29,10 @@ const schema = yup.object({
   password: yup.string().required('Vui lòng nhập mật khẩu'),
 })
 
-const Login: React.FC = () => {
+const Login = () => {
   const [showIcon, setShowIcon] = React.useState<boolean>(false)
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
-
+  const router = useRouter()
   const { control, handleSubmit } = useForm<IFormValue>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -34,8 +40,24 @@ const Login: React.FC = () => {
       password: '',
     },
   })
-  const onSubmitLogin = (data: IFormValue) => {
-    console.log(data)
+  const onSubmitLogin = async (data: IFormValue) => {
+    setIsLoading(true)
+    try {
+      const res = await axiosClient.post('auth/staff/login', data)
+      console.log(res.data?.data?.accessToken)
+      setIsLoading(false)
+
+      if (res.data.success) {
+        const decodeToken = jwt.decode(
+          res.data?.data?.accessToken
+        ) as DecodedToken
+        if (decodeToken && decodeToken.role === 'admin') {
+          window.location.href = '/admin/dashboard'
+        } else {
+          window.location.href = '/'
+        }
+      }
+    } catch (error) {}
   }
 
   return (
@@ -80,7 +102,7 @@ const Login: React.FC = () => {
                 control={control}
                 placeholder="Nhập mật khẩu"
                 icon={showIcon ? <BsEyeFill /> : <BsEyeSlashFill />}
-                onClick={() => setShowIcon((prev) => !prev)}
+                onClick={() => setShowIcon(!showIcon)}
               />
             </div>
             <div className=" my-4 text-end">
@@ -109,3 +131,18 @@ const Login: React.FC = () => {
 }
 
 export default Login
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const token = req.cookies['accessToken']
+  if (token) {
+    return {
+      redirect: {
+        destination: '/admin/dashboard',
+      },
+      props: {},
+    }
+  }
+  return {
+    props: {},
+  }
+}

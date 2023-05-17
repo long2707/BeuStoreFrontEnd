@@ -40,6 +40,7 @@ const TextFieldInput = (props: ITextField) => {
               {icon && (
                 <div className="flex items-center">
                   <button
+                    type="button"
                     className="p-[8px]  hover:rounded-full hover:bg-gray-200"
                     onClick={onClick}
                   >
