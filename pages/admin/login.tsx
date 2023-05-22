@@ -13,6 +13,8 @@ import axiosClient from '@/libs/axiosClient'
 import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
 import jwt, { JwtPayload } from 'jsonwebtoken'
+import { setCookie } from 'cookies-next'
+import axios from 'axios'
 interface IFormValue {
   email: string
   password: string
@@ -41,23 +43,24 @@ const Login = () => {
     },
   })
   const onSubmitLogin = async (data: IFormValue) => {
+    console.log(data)
     setIsLoading(true)
     try {
       const res = await axiosClient.post('auth/staff/login', data)
-      console.log(res.data?.data?.accessToken)
-      setIsLoading(false)
+      console.log(res.data)
 
-      if (res.data.success) {
-        const decodeToken = jwt.decode(
-          res.data?.data?.accessToken
-        ) as DecodedToken
-        if (decodeToken && decodeToken.role === 'admin') {
+      if (res.data?.success) {
+        setCookie('accessToken', res.data?.data?.accessToken)
+        setCookie('refreshToken', res.data?.data?.refreshToken)
+        setCookie('role', res.data?.data?.role)
+        if (res.data?.data?.accessToken && res.data?.data?.role === 'admin') {
           window.location.href = '/admin/dashboard'
         } else {
           window.location.href = '/'
         }
       }
     } catch (error) {}
+    setIsLoading(false)
   }
 
   return (
@@ -133,7 +136,8 @@ const Login = () => {
 export default Login
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const token = req.cookies['accessToken']
+  let token = req.cookies['accessToken']
+
   if (token) {
     return {
       redirect: {

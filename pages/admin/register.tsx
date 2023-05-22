@@ -6,7 +6,7 @@ import Meta from '@/components/common/Meta/Meta'
 import { BsEyeSlashFill, BsEyeFill } from 'react-icons/bs'
 import LoadingButton from '@/components/common/Button/LoadingButton'
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   const [showIcon, setShowIcon] = React.useState<boolean>(false)
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
@@ -70,4 +70,4 @@ const Login: React.FC = () => {
   )
 }
 
-export default Login
+export default Register
