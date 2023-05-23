@@ -5,7 +5,7 @@ function withAuth (req: NextRequest) {
     let token = req.cookies.get("accessToken");
     
     if (!token) {
-        return NextResponse.redirect(new URL("/admin/login", req.url));
+        return NextResponse.redirect(new URL("/auth/login", req.url));
     }
     return NextResponse.next();
 }

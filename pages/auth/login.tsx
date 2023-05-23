@@ -8,21 +8,15 @@ import LoadingButton from '@/components/common/Button/LoadingButton'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { cookies } from 'next/headers'
 import axiosClient from '@/libs/axiosClient'
 import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
-import jwt, { JwtPayload } from 'jsonwebtoken'
 import { setCookie } from 'cookies-next'
-import axios from 'axios'
 interface IFormValue {
   email: string
   password: string
 }
-interface DecodedToken extends JwtPayload {
-  role: string
-  // Add other properties from your JWT payload if needed
-}
+
 const schema = yup.object({
   email: yup
     .string()
@@ -43,11 +37,9 @@ const Login = () => {
     },
   })
   const onSubmitLogin = async (data: IFormValue) => {
-    console.log(data)
     setIsLoading(true)
     try {
-      const res = await axiosClient.post('auth/staff/login', data)
-      console.log(res.data)
+      const res = await axiosClient.post('auth/login', data)
 
       if (res.data?.success) {
         setCookie('accessToken', res.data?.data?.accessToken)
@@ -81,7 +73,7 @@ const Login = () => {
               Bạn chưa có tài khoản?{' '}
             </span>
             <Link
-              href={'/admin/register'}
+              href={'/auth/register'}
               className="text-[#00ab55] font-semibold"
             >
               Tạo tài khoản mới
