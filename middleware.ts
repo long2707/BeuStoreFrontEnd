@@ -11,7 +11,7 @@ function withAuth (req: NextRequest) {
 }
 
 export const config = {
-    matcher: "/admin/dashboard/:path*" 
+    matcher: "/admin/:path*" 
 };
 
 export default withAuth;

@@ -12,6 +12,7 @@ import axiosClient from '@/libs/axiosClient'
 import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
 import { setCookie } from 'cookies-next'
+import { AuthContext } from '@/context/AuthProvider'
 interface IFormValue {
   email: string
   password: string
@@ -28,6 +29,7 @@ const schema = yup.object({
 const Login = () => {
   const [showIcon, setShowIcon] = React.useState<boolean>(false)
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
+
   const router = useRouter()
   const { control, handleSubmit } = useForm<IFormValue>({
     resolver: yupResolver(schema),
@@ -39,13 +41,16 @@ const Login = () => {
   const onSubmitLogin = async (data: IFormValue) => {
     setIsLoading(true)
     try {
-      const res = await axiosClient.post('auth/login', data)
+      let res = await axiosClient.post('auth/login', data)
 
       if (res.data?.success) {
         setCookie('accessToken', res.data?.data?.accessToken)
         setCookie('refreshToken', res.data?.data?.refreshToken)
-        setCookie('role', res.data?.data?.role)
-        if (res.data?.data?.accessToken && res.data?.data?.role === 'admin') {
+        setCookie('user', JSON.stringify(res.data?.data?.user))
+        if (
+          res.data?.data?.accessToken &&
+          res.data?.data?.user?.role === 'admin'
+        ) {
           window.location.href = '/admin/dashboard'
         } else {
           window.location.href = '/'

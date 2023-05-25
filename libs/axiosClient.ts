@@ -1,7 +1,7 @@
 
 import axios from "axios";
 import queryString from "query-string";
-import { getCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 
 
 // Set up default config for http requests here
@@ -43,12 +43,13 @@ axiosClient.interceptors.response.use((response) => {
         originalConfig._retry = true;
 
         try {
-          const rs = await axiosClient.post("auth/staff/refresh-token", {
+          const res = await axiosClient.post("auth/refresh-token", {
               accessToken: getCookie("accessToken"),
               refreshToken: getCookie("refreshToken"),
           });
-
-         
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data?.data?.accessToken;
+        setCookie('accessToken', res.data?.data?.accessToken)
+        setCookie('refreshToken', res.data?.data?.refreshToken)
 
           return axiosClient(originalConfig);
         } catch (_error) {
