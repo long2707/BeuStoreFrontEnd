@@ -19,10 +19,14 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   }, [setUser])
 
   return (
-    <div className="h-screen">
+    <div className="min-h-full h-screen">
       <AdminHeader />
-      <AdminSidebar />
-      <main className="bg-gray-default">{children}</main>
+      <div className="h-full flex">
+        <AdminSidebar />
+        <main className="bg-[#f9fafbcc] md:w-[calc(100%_-_280px)] md:pt-[100px] px-4">
+          {children}
+        </main>
+      </div>
     </div>
   )
 }
