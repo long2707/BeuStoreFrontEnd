@@ -11,4 +11,19 @@
     header{
         @apply h-[96px]
     }
+  
+}
+@layer components{
+::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #718096;
+        border-radius: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: #CBD5E0;
+    }
 }
