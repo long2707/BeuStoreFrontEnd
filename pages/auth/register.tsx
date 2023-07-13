@@ -6,7 +6,6 @@ import Meta from '@/components/common/Meta/Meta'
 import {
   BsEyeSlashFill,
   BsEyeFill,
-  BsFillInfoCircleFill,
   BsFillExclamationCircleFill,
 } from 'react-icons/bs'
 import LoadingButton from '@/components/common/Button/LoadingButton'

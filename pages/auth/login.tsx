@@ -3,7 +3,11 @@ import Link from 'next/link'
 import React from 'react'
 import TextFieldInput from '@/components/common/CustomInput/TextFieldInput'
 import Meta from '@/components/common/Meta/Meta'
-import { BsEyeSlashFill, BsEyeFill } from 'react-icons/bs'
+import {
+  BsEyeSlashFill,
+  BsEyeFill,
+  BsFillExclamationCircleFill,
+} from 'react-icons/bs'
 import LoadingButton from '@/components/common/Button/LoadingButton'
 import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
@@ -12,7 +16,10 @@ import axiosClient from '@/libs/axiosClient'
 import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
 import { setCookie } from 'cookies-next'
-import { AuthContext } from '@/context/AuthProvider'
+
+import { UseMutationResult, useMutation } from '@tanstack/react-query'
+import { Group } from 'next/dist/shared/lib/router/utils/route-regex'
+import { AxiosResponse } from 'axios'
 interface IFormValue {
   email: string
   password: string
@@ -26,11 +33,13 @@ const schema = yup.object({
   password: yup.string().required('Vui lòng nhập mật khẩu'),
 })
 
+type ErrorResponse = {
+  message: string
+}
 const Login = () => {
   const [showIcon, setShowIcon] = React.useState<boolean>(false)
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
+  //const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
-  const router = useRouter()
   const { control, handleSubmit } = useForm<IFormValue>({
     resolver: yupResolver(schema),
     defaultValues: {
@@ -38,26 +47,27 @@ const Login = () => {
       password: '',
     },
   })
-  const onSubmitLogin = async (data: IFormValue) => {
-    setIsLoading(true)
-    try {
-      let res = await axiosClient.post('auth/login', data)
-
-      if (res.data?.success) {
-        setCookie('accessToken', res.data?.data?.accessToken)
-        setCookie('refreshToken', res.data?.data?.refreshToken)
-        setCookie('user', JSON.stringify(res.data?.data?.user))
-        if (
-          res.data?.data?.accessToken &&
-          res.data?.data?.user?.role === 'admin'
-        ) {
-          window.location.href = '/admin/dashboard'
-        } else {
-          window.location.href = '/'
-        }
+  const {
+    mutate,
+    isLoading,
+    isError,
+    error,
+  }: UseMutationResult<AxiosResponse, Error, IFormValue> = useMutation({
+    mutationFn: async (formBody: IFormValue) => {
+      return await axiosClient.post('auth/login', formBody)
+    },
+    onSuccess: (data) => {
+      setCookie('accessToken', data?.data?.accessToken)
+      setCookie('refreshToken', data?.data?.refreshToken)
+      setCookie('role', data?.data?.role)
+      if (data?.data?.role == 'admin' && data?.data?.accessToken) {
+        return (window.location.href = '/admin/dashboard')
       }
-    } catch (error) {}
-    setIsLoading(false)
+      return (window.location.href = '/')
+    },
+  })
+  const onSubmitLogin = async (formBody: IFormValue) => {
+    mutate(formBody)
   }
 
   return (
@@ -84,6 +94,14 @@ const Login = () => {
               Tạo tài khoản mới
             </Link>
           </div>
+          {isError && (
+            <div className="flex items-center mb-4 py-3 bg-[#ffe9d5] px-2 text-red-500 text-lg rounded-lg leading-6">
+              <span className="mr-2">
+                <BsFillExclamationCircleFill />
+              </span>
+              <span className="text-sm">{error?.message}</span>
+            </div>
+          )}
           <form
             method="post"
             className="w-full"

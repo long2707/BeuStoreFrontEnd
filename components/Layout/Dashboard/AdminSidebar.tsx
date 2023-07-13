@@ -1,4 +1,3 @@
-import { AuthContext } from '@/context/AuthProvider'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -7,6 +6,7 @@ import { AiOutlineDashboard } from 'react-icons/ai'
 import { FaBlogger } from 'react-icons/fa'
 import { FiShoppingBag } from 'react-icons/fi'
 import { BiCreditCard, BiSlideshow } from 'react-icons/bi'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface IMenuSidebar {
   title: string
@@ -44,8 +44,14 @@ const MenuSidebar: IMenuSidebar[] = [
 
 const WIDTH = '280px'
 
+interface IUser {
+  firstName: string
+  lastName: string
+  email: string
+}
+
 const AdminSidebar = () => {
-  const { user } = React.useContext(AuthContext)
+  const user: IUser | undefined = useQueryClient().getQueryData(['getUser'])
   const router = useRouter()
 
   return (
@@ -67,7 +73,7 @@ const AdminSidebar = () => {
             />
           </div>
           <span className="ml-2 text-constrantText font-semibold">
-            {user?.email}
+            {user?.firstName} {user?.lastName}
           </span>
         </div>
       </>

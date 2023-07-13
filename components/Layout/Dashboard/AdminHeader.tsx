@@ -1,14 +1,21 @@
-import { AuthContext } from '@/context/AuthProvider'
+import { useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { use } from 'react'
+
+import React from 'react'
 import { IoIosNotifications } from 'react-icons/io'
 
+interface IUser {
+  firstName: string
+  lastName: string
+  email: string
+}
+
 const AdminHeader = () => {
-  const { user } = React.useContext(AuthContext)
+  const user: IUser | undefined = useQueryClient().getQueryData(['getUser'])
 
   return (
-    <header className="bg-[#f9fafbcc] md:w-[calc(100%_-_280px)] fixed left-auto top-0 right-0 px-10 header">
+    <header className="bg-[#f9fafbcc] md:w-[calc(100%_-_280px)] fixed left-auto top-0 right-0 px-10 h-20 header">
       <div className="flex justify-end h-full items-center">
         <div className="group relative">
           <button className="relative inline-block p-2 group-hover:bg-gray-200 group-hover:rounded-full group-hover:scale-105 transition-transform">
@@ -48,11 +55,13 @@ const AdminHeader = () => {
               alt="avatar"
             />
           </button>
-          <div className="bg-white absolute right-0 shadow-md transition-all rounded-xl hidden group-hover:!block">
+          <div className="bg-white absolute w-52 right-0 shadow-md transition-all rounded-xl hidden group-hover:!block">
             <span className="absolute right-7  z-10 border-l-[10px] border-l-solid border-l-transparent border-r-[10px] border-r-solid border-r-transparent border-b-[15px] border-b-solid border-b-white translate-x-[100%] translate-y-[-100%]"></span>
             <ul className=" z-20">
               <li className=" py-2 border-b border-b-gray-100">
-                <span className="px-4">{user?.email}</span>
+                <p className="px-4">
+                  {user?.firstName} {user?.lastName}
+                </p>
               </li>
               <li className=" cursor-pointer m-2 p-2 hover:bg-[#919eab14] hover:rounded-md text-sm">
                 <Link href={'/admin/profile'}>Thông tin</Link>
