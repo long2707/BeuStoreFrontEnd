@@ -24,7 +24,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       <AdminHeader />
       <div className="h-full flex">
         <AdminSidebar />
-        <main className="bg-[#f9fafbcc] md:w-[calc(100%_-_280px)] md:pt-[90px] px-4">
+        <main className="bg-[#f9fafbcc] md:w-[calc(100%_-_280px)] md:pt-[80px] px-4">
           {children}
         </main>
       </div>

@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+//  @type {import('tailwindcss').Config} 
 
 module.exports = {
   content: [
@@ -13,6 +13,18 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      keyframes: {
+        grow: {
+          '0%': {
+            opacity: '0',
+            transform: 'scale(0)'
+          },
+          '100%': {
+            opacityt: '100%',
+            transform: 'scale(100%)'
+          }
+        }
+      }
     },
    
   },

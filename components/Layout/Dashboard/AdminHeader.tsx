@@ -26,22 +26,19 @@ const AdminHeader = () => {
               </span>
             </span>
           </button>
-          <div className="bg-white  w-[300px] absolute right-0 shadow-md transition-all rounded-xl hidden group-hover:!block">
-            <span className="absolute right-7  z-10 border-l-[10px] border-l-solid border-l-transparent border-r-[10px] border-r-solid border-r-transparent border-b-[15px] border-b-solid border-b-white translate-x-[100%] translate-y-[-100%]"></span>
-            <ul className="z-20">
-              <div className="m-2 p-2  flex items-center justify-start hover:bg-[#919eab14] hover:rounded-md text-sm">
-                <span className="p-2 bg-[#f9fafbcc] rounded-full">
-                  <Image src={require('@/assets/ic_package.svg')} alt="" />
-                </span>
-                <span className="ml-2">Bạn có 2 đơn hàng mới</span>
-              </div>
-              <div className="m-2 p-2  flex items-center justify-start hover:bg-[#919eab14] hover:rounded-md text-sm">
-                <span className="p-2 bg-[#f9fafbcc] rounded-full">
-                  <Image src={require('@/assets/ic_package.svg')} alt="" />
-                </span>
-                <span className="ml-2">Bạn có 2 đơn hàng mới</span>
-              </div>
-            </ul>
+          <div className="bg-white  w-[300px] absolute right-0 shadow-md  rounded-lg animate-[grow_.3s_ease-in-out] origin-[95%_top] before:contents-[''] before:absolute before:-top-6 before:right-[0.675rem]  before:border-x-[10px] before:border-y-[12px] before:border-solid before:border-t-transparent before:border-l-transparent before:border-r-transparent before:border-b-white hidden group-hover:!block">
+            <div className="m-2 p-2  flex items-center justify-start hover:bg-[#919eab14] hover:rounded-md text-sm">
+              <span className="p-2 bg-[#f9fafbcc] rounded-full">
+                <Image src={require('@/assets/ic_package.svg')} alt="" />
+              </span>
+              <span className="ml-2">Bạn có 2 đơn hàng mới</span>
+            </div>
+            <div className="m-2 p-2  flex items-center justify-start hover:bg-[#919eab14] hover:rounded-md text-sm">
+              <span className="p-2 bg-[#f9fafbcc] rounded-full">
+                <Image src={require('@/assets/ic_package.svg')} alt="" />
+              </span>
+              <span className="ml-2">Bạn có 2 đơn hàng mới</span>
+            </div>
           </div>
         </div>
 
@@ -55,8 +52,7 @@ const AdminHeader = () => {
               alt="avatar"
             />
           </button>
-          <div className="bg-white absolute w-52 right-0 shadow-md transition-all rounded-xl hidden group-hover:!block">
-            <span className="absolute right-7  z-10 border-l-[10px] border-l-solid border-l-transparent border-r-[10px] border-r-solid border-r-transparent border-b-[15px] border-b-solid border-b-white translate-x-[100%] translate-y-[-100%]"></span>
+          <div className="bg-white w-52 absolute right-0 shadow-md  rounded-lg animate-[grow_.3s_ease-in-out] origin-[95%_top] before:contents-[''] before:absolute before:-top-6 before:right-[0.675rem]  before:border-x-[10px] before:border-y-[12px] before:border-solid before:border-t-transparent before:border-l-transparent before:border-r-transparent before:border-b-white hidden group-hover:!block">
             <ul className=" z-20">
               <li className=" py-2 border-b border-b-gray-100">
                 <p className="px-4">
