@@ -7,9 +7,9 @@ interface Idata {
   pathName: string
   title: string
 }
-const ListProductAdmin = () => {
+const DetailProduct = () => {
   const router = useRouter()
-
+  console.log(router)
   let currentPath = ''
   const routes = router.pathname.split('/').filter((item) => item != '')
   const arrRoutes = routes.map((route: string) => {
@@ -25,4 +25,4 @@ const ListProductAdmin = () => {
   )
 }
 
-export default ListProductAdmin
+export default DetailProduct
