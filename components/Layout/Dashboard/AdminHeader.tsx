@@ -19,13 +19,14 @@ const AdminHeader = () => {
       <div className="flex justify-end h-full items-center">
         <div className="group relative">
           <button className="relative inline-block p-2 group-hover:bg-gray-200 group-hover:rounded-full group-hover:scale-105 transition-transform">
-            <span className="relative">
+            <div className="relative">
               <IoIosNotifications className="text-[#637381] group-hover:text-green-600 text-2xl" />
-              <span className="flex items-center justify-center absolute bg-red-600 text-white top-0 right-0 scale-100 translate-x-[40%] translate-y-[-47%] rounded-full text-[0.75rem] leading-4 h-5 w-5 px-[6px]">
+              <span className="flex items-center justify-center bg-red-600 text-white absolute -top-2 -right-2 scale-100  rounded-full text-[0.75rem] leading-4 h-5 w-5 px-[6px]">
                 2
               </span>
-            </span>
+            </div>
           </button>
+
           <div className="bg-white  w-[300px] absolute right-0 shadow-md  rounded-lg animate-[grow_.3s_ease-in-out] origin-[95%_top] before:contents-[''] before:absolute before:-top-6 before:right-[0.675rem]  before:border-x-[10px] before:border-y-[12px] before:border-solid before:border-t-transparent before:border-l-transparent before:border-r-transparent before:border-b-white hidden group-hover:!block">
             <div className="m-2 p-2  flex items-center justify-start hover:bg-[#919eab14] hover:rounded-md text-sm">
               <span className="p-2 bg-[#f9fafbcc] rounded-full">
