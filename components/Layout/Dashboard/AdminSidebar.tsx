@@ -17,22 +17,22 @@ interface IMenuSidebar {
 const MenuSidebar: IMenuSidebar[] = [
   {
     title: 'bảng điều khiển',
-    path: '/admin/dashboard',
+    path: '/dashboard',
     icon: <AiOutlineDashboard />,
   },
   {
     title: 'sản phẩm',
-    path: '/admin/product',
+    path: '/dashboard/product',
     icon: <FiShoppingBag />,
   },
   {
     title: 'đơn hàng',
-    path: '/admin/invoice',
+    path: '/dashboard/invoice',
     icon: <BiCreditCard />,
   },
   {
     title: 'blog',
-    path: '/admin/blog',
+    path: '/dashboard/blog',
     icon: <FaBlogger />,
   },
   {
@@ -53,6 +53,7 @@ interface IUser {
 const AdminSidebar = () => {
   const user: IUser | undefined = useQueryClient().getQueryData(['getUser'])
   const router = useRouter()
+  console.log(router)
 
   return (
     <div
@@ -83,7 +84,7 @@ const AdminSidebar = () => {
             href={item?.path}
             key={item?.title}
             className={`flex items-center text-[#637381] font-normal px-5 py-3 mb-1 transition-colors rounded-lg  hover:bg-[#00ab5514] ${
-              router.pathname.includes(item.path)
+              router.pathname == item.path
                 ? '!text-[#00AB55] !font-medium bg-[#00ab5514]'
                 : ''
             }`}

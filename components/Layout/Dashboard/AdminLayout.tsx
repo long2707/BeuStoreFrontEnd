@@ -6,15 +6,15 @@ import axiosClient from '@/libs/axiosClient'
 import { useQuery } from '@tanstack/react-query'
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
-  // const { isLoading } = useQuery({
-  //   queryKey: ['getUser'],
-  //   queryFn: async () => {
-  //     const { data } = await axiosClient.post('auth/get-auth')
-  //     if (data?.success) {
-  //       return data?.data
-  //     }
-  //   },
-  // })
+  const { isLoading } = useQuery({
+    queryKey: ['getUser'],
+    queryFn: async () => {
+      const data = await axiosClient.post('auth/get-auth')
+      if (data.status === 200) {
+        return data?.data?.data
+      }
+    },
+  })
 
   // if (isLoading) {
   //   return <h1> loading...</h1>
@@ -24,7 +24,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       <AdminHeader />
       <div className="h-full flex">
         <AdminSidebar />
-        <main className="bg-[#f9fafbcc] md:w-[calc(100%_-_280px)] md:pt-[80px] px-4">
+        <main className="bg-[#f9fafbcc] md:w-[calc(100%_-_280px)] md:pt-[80px] md:px-10">
           {children}
         </main>
       </div>
