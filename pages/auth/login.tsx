@@ -13,13 +13,12 @@ import * as yup from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import axiosClient from '@/libs/axiosClient'
-import { useRouter } from 'next/router'
 import { GetServerSideProps } from 'next'
 import { setCookie } from 'cookies-next'
 
 import { UseMutationResult, useMutation } from '@tanstack/react-query'
-import { Group } from 'next/dist/shared/lib/router/utils/route-regex'
 import { AxiosResponse } from 'axios'
+import jwtDecode from 'jwt-decode'
 interface IFormValue {
   email: string
   password: string
@@ -57,11 +56,13 @@ const Login = () => {
       return await axiosClient.post('auth/login', formBody)
     },
     onSuccess: (data) => {
+      console.log(data)
       setCookie('accessToken', data?.data?.accessToken)
       setCookie('refreshToken', data?.data?.refreshToken)
-      setCookie('role', data?.data?.role)
-      if (data?.data?.role == 'admin' && data?.data?.accessToken) {
-        return (window.location.href = '/admin/dashboard')
+
+      let getUser: any = jwtDecode(data?.data?.accessToken)
+      if (getUser?.role == 'admin' && data?.data?.accessToken) {
+        return (window.location.href = '/dashboard')
       }
       return (window.location.href = '/')
     },

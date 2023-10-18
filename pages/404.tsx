@@ -1,10 +1,12 @@
 import Meta from '@/components/common/Meta/Meta'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 
 type Props = {}
 
 const NotFoundAll = (props: Props) => {
+  const router = useRouter()
   return (
     <>
       <Meta title="Không tìm thấy trang!" description="Not found 404!" />
@@ -89,12 +91,12 @@ const NotFoundAll = (props: Props) => {
               </defs>
             </svg>
           </div>
-          <Link
-            href={'/admin/dashboard'}
+          <button
+            onClick={() => router.back()}
             className="bg-[#212b36] text-sm md:text-base text-white py-2 px-3 rounded capitalize hover:opacity-95"
           >
             Trở về trang chủ
-          </Link>
+          </button>
         </div>
       </main>
     </>
