@@ -15,9 +15,9 @@ const AreaChart = ({ color1, color2, dataSeries }: TChart) => {
       let color = d < 50 ? color1 : color2
 
       return {
-        offset: (idx / data.length) * 115,
+        offset: (idx / data.length) * 114,
         color,
-        opacity: 1,
+        opacity: 0.9,
       }
     })
   }
