@@ -9,7 +9,7 @@ type TChart = {
   dataSeries: number[]
 }
 
-const AreaChart = ({ color1, color2, dataSeries }: TChart) => {
+const LineChart = ({ color1, color2, dataSeries }: TChart) => {
   const generateColors = (data: number[]) => {
     return data.map((d, idx) => {
       let color = d < 50 ? color1 : color2
@@ -101,4 +101,4 @@ const AreaChart = ({ color1, color2, dataSeries }: TChart) => {
   )
 }
 
-export default AreaChart
+export default LineChart

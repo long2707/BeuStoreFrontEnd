@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next'
 import axiosClient from '@/libs/axiosClient'
 import Meta from '@/components/common/Meta/Meta'
 import { useQuery } from '@tanstack/react-query'
-import AreaChart from '@/components/common/Charts/AreaChart'
+import LineChart from '@/components/common/Charts/LineChart'
 
 import { FaArrowTrendUp, FaArrowTrendDown } from 'react-icons/fa6'
 
@@ -33,7 +33,7 @@ const Dashboard = () => {
         ))} */}
         {/* product sold start*/}
         <div className="">
-          <div className="flex items-center w-full bg-white md:p-6 shadow-md rounded-2xl">
+          <div className="flex items-center w-full bg-white md:p-6 shadow-md rounded-2xl z-0">
             <div className="flex-grow">
               <h6 className="text-sm font-semibold text-gray-500 mb-4 ">
                 {' '}
@@ -52,7 +52,7 @@ const Dashboard = () => {
                 </span>
               </div>
             </div>
-            <AreaChart
+            <LineChart
               color1="#30A76F"
               color2="#5BE49B"
               dataSeries={[22, 8, 35, 50, 80, 77, 12, 87, 43]}
@@ -82,7 +82,7 @@ const Dashboard = () => {
                 </span>
               </div>
             </div>
-            <AreaChart
+            <LineChart
               color1="#00B8D9"
               color2="#61F3F3"
               dataSeries={[12, 14, 2, 47, 42, 15, 47, 75, 65]}
@@ -112,7 +112,7 @@ const Dashboard = () => {
                 </span>
               </div>
             </div>
-            <AreaChart
+            <LineChart
               color1="#FFAB00"
               color2="#FFD666"
               dataSeries={[80, 45, 23, 56, 112, 45, 144, 45, 46]}
