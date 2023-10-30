@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next'
 import axiosClient from '@/libs/axiosClient'
 import Meta from '@/components/common/Meta/Meta'
 import { useQuery } from '@tanstack/react-query'
-import LineChart from '@/components/common/Charts/LineChart'
+import { AreaChart, LineChart } from '@/components/common/Charts'
 
 import { FaArrowTrendUp, FaArrowTrendDown } from 'react-icons/fa6'
 
@@ -120,7 +120,10 @@ const Dashboard = () => {
           </div>
         </div>
         {/* order end*/}
+
+        {/* all  */}
       </div>
+      <AreaChart />
     </AdminLayout>
   )
 }
