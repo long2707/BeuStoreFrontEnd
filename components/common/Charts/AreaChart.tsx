@@ -4,7 +4,7 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const AreaChart = () => {
   return (
-    <div className="mt-4">
+    <div className="mt-6 mx-6">
       <Chart
         options={{
           dataLabels: {
@@ -93,6 +93,7 @@ const AreaChart = () => {
             style: {
               fontSize: '20',
               fontWeight: '600',
+              fontFamily: "'Public Sans', sans-serif",
             },
           },
 
@@ -115,6 +116,17 @@ const AreaChart = () => {
               filter: {
                 type: 'darken',
                 value: 0.88,
+              },
+            },
+          },
+
+          // Grid
+          grid: {
+            strokeDashArray: 3,
+            // borderColor: theme.palette.divider,
+            xaxis: {
+              lines: {
+                show: false,
               },
             },
           },

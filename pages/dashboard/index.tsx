@@ -1,12 +1,15 @@
 import React from 'react'
-import AdminLayout from '@/components/Layout/Dashboard/AdminLayout'
 import { GetServerSideProps } from 'next'
+import Image from 'next/image'
+import AdminLayout from '@/components/Layout/Dashboard/AdminLayout'
 import axiosClient from '@/libs/axiosClient'
 import Meta from '@/components/common/Meta/Meta'
 import { useQuery } from '@tanstack/react-query'
 import { AreaChart, LineChart } from '@/components/common/Charts'
 
 import { FaArrowTrendUp, FaArrowTrendDown } from 'react-icons/fa6'
+import Link from 'next/link'
+import { ColorPreview } from '@/components/common/Color-utils'
 
 const Dashboard = () => {
   const [dataChart, setDataChart] = React.useState([])
@@ -33,7 +36,7 @@ const Dashboard = () => {
         ))} */}
         {/* product sold start*/}
         <div className="">
-          <div className="flex items-center w-full bg-white md:p-6 shadow-md rounded-2xl z-0">
+          <div className="flex items-center w-full bg-white md:p-6 shadow-sm rounded-2xl z-0">
             <div className="flex-grow">
               <h6 className="text-sm font-semibold text-gray-500 mb-4 ">
                 {' '}
@@ -63,7 +66,7 @@ const Dashboard = () => {
 
         {/* sales profit start*/}
         <div className="">
-          <div className="shadow-md flex items-center bg-white w-full md:p-6 rounded-2xl">
+          <div className="shadow-sm flex items-center bg-white w-full md:p-6 rounded-2xl">
             <div className="flex-grow">
               <h6 className="text-sm mb-4 font-semibold text-gray-500">
                 {' '}
@@ -93,7 +96,7 @@ const Dashboard = () => {
 
         {/* order start*/}
         <div className="">
-          <div className="shadow-md flex items-center bg-white w-full md:p-6 rounded-2xl">
+          <div className="shadow-sm flex items-center bg-white w-full md:p-6 rounded-2xl">
             <div className="flex-grow">
               <h6 className="text-sm mb-4 font-semibold text-gray-500">
                 {' '}
@@ -120,10 +123,53 @@ const Dashboard = () => {
           </div>
         </div>
         {/* order end*/}
-
-        {/* all  */}
       </div>
-      <AreaChart />
+
+      {/* section 2 */}
+      <div className="grid grid-cols-12 gap-3 pt-7">
+        <div className="col-span-8 bg-white rounded-2xl shadow-sm">
+          <AreaChart />
+        </div>
+        <div className="col-span-4 bg-white rounded-2xl shadow-sm p-6">
+          <div>
+            <h2 className="text-xl font-semibold">Sản phẩm mới</h2>
+            <div className="pt-6">
+              <div className="flex flex-row gap-4">
+                <div className="flex-shrink-0 ">
+                  <Image
+                    src={
+                      'https://api-prod-minimal-v510.vercel.app/assets/images/m_product/product_1.jpg'
+                    }
+                    width="48"
+                    height="48"
+                    alt="image"
+                    className="rounded-xl"
+                  />
+                </div>
+                <div className="flex-auto m-0 min-w-0">
+                  <span className="overflow-hidden text-ellipsis whitespace-nowrap block">
+                    <Link href={'/product'}>Nike Air Force 1 NDESTRUKT</Link>
+                  </span>
+                  <div className=" flex flex-row gap-1">
+                    <span>$83.74</span>
+                    <span>$91.14</span>
+                  </div>
+                </div>
+
+                <ColorPreview
+                  colors={[
+                    'bg-zinc-900',
+                    'bg-red-500',
+                    'bg-amber-400',
+                    'bg-green-500',
+                  ]}
+                  limit={3}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </AdminLayout>
   )
 }
