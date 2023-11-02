@@ -20,11 +20,11 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   //   return <h1> loading...</h1>
   // }
   return (
-    <div className="min-h-full h-screen">
+    <div className="min-h-0 h-full">
       <AdminHeader />
       <div className="h-full flex">
         <AdminSidebar />
-        <main className="bg-[#f9fafbcc] md:w-[calc(100%_-_280px)] md:pt-[80px] md:px-10">
+        <main className="bg-[#f4f6f8] md:w-[calc(100%_-_280px)] md:pt-[80px] md:px-10">
           {children}
         </main>
       </div>

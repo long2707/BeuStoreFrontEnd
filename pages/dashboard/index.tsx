@@ -11,6 +11,40 @@ import { FaArrowTrendUp, FaArrowTrendDown } from 'react-icons/fa6'
 import Link from 'next/link'
 import { ColorPreview } from '@/components/common/Color-utils'
 
+const Data_Demo = [
+  {
+    title: 'Nike Air Force 1 NDESTRUKT',
+    image:
+      'https://api-prod-minimal-v510.vercel.app/assets/images/m_product/product_1.jpg',
+    colors: ['#00A76F', '#8E33FF', '#61F3F3', '#B71D18'],
+    RegPrice: 122.89,
+    SalePrice: 89.9,
+  },
+  {
+    title: 'Foundations Matte Flip Flop',
+    image:
+      'https://api-prod-minimal-v510.vercel.app/assets/images/m_product/product_1.jpg',
+    colors: ['#00A76F', '#8E33FF'],
+    RegPrice: 12.89,
+    SalePrice: '',
+  },
+  {
+    title: 'Nike Air Zoom Pegasus 37 A.I.R. Chaz Bear',
+    image:
+      'https://api-prod-minimal-v510.vercel.app/assets/images/m_product/product_1.jpg',
+    colors: [],
+    RegPrice: 122.89,
+    SalePrice: 89.9,
+  },
+  {
+    title: 'Nike Air Force 1 NDESTRUKT',
+    image:
+      'https://api-prod-minimal-v510.vercel.app/assets/images/m_product/product_1.jpg',
+    colors: ['#00A76F', '#8E33FF', '#61F3F3'],
+    RegPrice: 122.89,
+    SalePrice: 89.9,
+  },
+]
 const Dashboard = () => {
   const [dataChart, setDataChart] = React.useState([])
 
@@ -126,46 +160,59 @@ const Dashboard = () => {
       </div>
 
       {/* section 2 */}
-      <div className="grid grid-cols-12 gap-3 pt-7">
-        <div className="col-span-8 bg-white rounded-2xl shadow-sm">
+      <div className="grid grid-cols-12 gap-3 pt-7 pb-14">
+        <div className="col-span-8 bg-white rounded-2xl shadow">
           <AreaChart />
         </div>
-        <div className="col-span-4 bg-white rounded-2xl shadow-sm p-6">
+        <div className="col-span-4 bg-white rounded-2xl shadow p-6">
           <div>
             <h2 className="text-xl font-semibold">Sản phẩm mới</h2>
-            <div className="pt-6">
-              <div className="flex flex-row gap-4">
-                <div className="flex-shrink-0 ">
-                  <Image
-                    src={
-                      'https://api-prod-minimal-v510.vercel.app/assets/images/m_product/product_1.jpg'
-                    }
-                    width="48"
-                    height="48"
-                    alt="image"
-                    className="rounded-xl"
-                  />
-                </div>
-                <div className="flex-auto m-0 min-w-0">
-                  <span className="overflow-hidden text-ellipsis whitespace-nowrap block">
-                    <Link href={'/product'}>Nike Air Force 1 NDESTRUKT</Link>
-                  </span>
-                  <div className=" flex flex-row gap-1">
-                    <span>$83.74</span>
-                    <span>$91.14</span>
+            <div className="pt-2">
+              {Data_Demo.map((item, idx) => (
+                <div
+                  key={item.title + idx}
+                  className="flex flex-row gap-4 pt-4"
+                >
+                  <div className="flex-shrink-0 ">
+                    <Image
+                      src={item.image}
+                      width="48"
+                      height="48"
+                      alt="image"
+                      className="rounded-xl"
+                    />
                   </div>
-                </div>
+                  <div className="flex-auto m-0 min-w-0">
+                    <span className="overflow-hidden text-ellipsis whitespace-nowrap block">
+                      <Link
+                        href={'/product'}
+                        className="text-sm hover:underline font-medium"
+                      >
+                        {item.title}
+                      </Link>
+                    </span>
+                    <div className=" flex flex-row gap-1">
+                      <span
+                        className={`font-normal text-gray-400 text-sm ${
+                          item.SalePrice && 'line-through mr-1'
+                        }`}
+                      >
+                        ${item.RegPrice}
+                      </span>
+                      {item.SalePrice && (
+                        <span className="text-sm font-normal text-red-400">
+                          {' '}
+                          ${item.SalePrice}
+                        </span>
+                      )}
+                    </div>
+                  </div>
 
-                <ColorPreview
-                  colors={[
-                    'bg-zinc-900',
-                    'bg-red-500',
-                    'bg-amber-400',
-                    'bg-green-500',
-                  ]}
-                  limit={3}
-                />
-              </div>
+                  {item.colors && (
+                    <ColorPreview colors={item.colors} limit={3} />
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>

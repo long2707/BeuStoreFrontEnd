@@ -7,17 +7,18 @@ interface IColorProps {
 const ColorPreview = ({ colors, limit }: IColorProps) => {
   const rederColor = colors.slice(0, limit)
 
-  const rederLengthColor = colors.length - 1
+  const rederLengthColor = colors.length - limit
 
   return (
     <span className="flex flex-row items-center">
       {rederColor.map((color, idx) => (
         <div
           key={color + idx}
-          className={`${color} w-4 h-4 -ml-2 rounded-full border-2 border-white shadow`}
+          className={` w-4 h-4 -ml-2 rounded-full border-2 border-white shadow`}
+          style={{ backgroundColor: `${color ?? 'none'}` }}
         ></div>
       ))}
-      <span>+{rederLengthColor}</span>
+      {rederLengthColor > 0 && <span>+{rederLengthColor}</span>}
     </span>
   )
 }

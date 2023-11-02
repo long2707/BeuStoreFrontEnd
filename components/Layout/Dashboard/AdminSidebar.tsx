@@ -57,7 +57,7 @@ const AdminSidebar = () => {
 
   return (
     <div
-      className={`bg-[#f9fafbcc] py-3 px-5 min-h-full scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 overflow-y-auto w-[280px] border-r-[1px] border-dashed border-[#919eab3d]`}
+      className={`bg-[#f4f6f8] py-3 px-5 min-h-full scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 overflow-y-auto w-[280px] border-r-[1px] border-dashed border-[#919eab3d]`}
     >
       <Image
         src={require('@/assets/BeuStore_logo.png')}

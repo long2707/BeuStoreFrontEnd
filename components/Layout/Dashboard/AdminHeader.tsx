@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import React from 'react'
+import React, { MutableRefObject } from 'react'
 import { IoIosNotifications } from 'react-icons/io'
 
 interface IUser {
@@ -14,8 +14,29 @@ interface IUser {
 const AdminHeader = () => {
   const user: IUser | undefined = useQueryClient().getQueryData(['getUser'])
 
+  const scrollRef = React.useRef() as MutableRefObject<HTMLDivElement>
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', () => {
+      if (
+        document.body.scrollTop > 80 ||
+        document.documentElement.scrollTop > 80
+      ) {
+        scrollRef.current.classList.add('bg-opacity-80')
+      } else {
+        scrollRef.current.classList.remove('bg-opacity-80')
+      }
+    })
+    return () => {
+      window.removeEventListener('scroll', () => {})
+    }
+  }, [])
+
   return (
-    <header className="bg-[#f9fafbcc] md:w-[calc(100%_-_280px)] fixed left-auto top-0 right-0 px-10 h-20 header z-10">
+    <header
+      ref={scrollRef}
+      className="bg-[#f4f6f8] md:w-[calc(100%_-_280px)] fixed left-auto top-0 right-0 px-10 h-20 header z-10 scroll:"
+    >
       <div className="flex justify-end h-full items-center">
         <div className="group relative">
           <button className=" inline-block p-2 group-hover:bg-gray-200 group-hover:rounded-full group-hover:scale-105 transition-transform">
