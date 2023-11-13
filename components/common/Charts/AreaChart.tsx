@@ -4,7 +4,7 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const AreaChart = () => {
   return (
-    <div className="mt-6 mx-6">
+    <div className="mt-3 mx-3 lg:mt-6 lg:mx-6">
       <Chart
         options={{
           dataLabels: {

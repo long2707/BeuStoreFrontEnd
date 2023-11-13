@@ -70,7 +70,7 @@ const Dashboard = () => {
         ))} */}
         {/* product sold start*/}
         <div className="">
-          <div className="flex items-center w-full bg-white md:p-6 shadow-sm rounded-2xl z-0">
+          <div className="flex items-center w-full bg-white p-3 md:p-6 shadow-sm rounded-2xl z-0">
             <div className="flex-grow">
               <h6 className="text-sm font-semibold text-gray-500 mb-4 ">
                 {' '}
@@ -100,7 +100,7 @@ const Dashboard = () => {
 
         {/* sales profit start*/}
         <div className="">
-          <div className="shadow-sm flex items-center bg-white w-full md:p-6 rounded-2xl">
+          <div className="shadow-sm flex items-center bg-white w-full p-3 md:p-6 rounded-2xl">
             <div className="flex-grow">
               <h6 className="text-sm mb-4 font-semibold text-gray-500">
                 {' '}
@@ -130,7 +130,7 @@ const Dashboard = () => {
 
         {/* order start*/}
         <div className="">
-          <div className="shadow-sm flex items-center bg-white w-full md:p-6 rounded-2xl">
+          <div className="shadow-sm flex items-center bg-white w-full p-3 lg:p-6 rounded-2xl">
             <div className="flex-grow">
               <h6 className="text-sm mb-4 font-semibold text-gray-500">
                 {' '}
@@ -161,11 +161,11 @@ const Dashboard = () => {
 
       {/* section 2 */}
       <div className="grid grid-cols-12 gap-3 pt-7 pb-14">
-        <div className="col-span-8 bg-white rounded-2xl shadow">
+        <div className="col-span-12 lg:col-span-8 bg-white rounded-2xl shadow">
           <AreaChart />
         </div>
-        <div className="col-span-4 bg-white rounded-2xl shadow p-6">
-          <div>
+        <div className="col-span-12 lg:col-span-4">
+          <div className="bg-white rounded-2xl shadow p-6">
             <h2 className="text-xl font-semibold">Sản phẩm mới</h2>
             <div className="pt-2">
               {Data_Demo.map((item, idx) => (

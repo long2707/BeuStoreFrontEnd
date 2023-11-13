@@ -4,14 +4,14 @@ import Link from 'next/link'
 
 import React, { MutableRefObject } from 'react'
 import { IoIosNotifications } from 'react-icons/io'
-
+import { BiMenuAltRight } from 'react-icons/bi'
 interface IUser {
   firstName: string
   lastName: string
   email: string
 }
 
-const AdminHeader = () => {
+const AdminHeader = ({ onSidebarOpen }: { onSidebarOpen: () => void }) => {
   const user: IUser | undefined = useQueryClient().getQueryData(['getUser'])
 
   const scrollRef = React.useRef() as MutableRefObject<HTMLDivElement>
@@ -22,9 +22,19 @@ const AdminHeader = () => {
         document.body.scrollTop > 80 ||
         document.documentElement.scrollTop > 80
       ) {
-        scrollRef.current.classList.add('bg-opacity-80')
+        scrollRef.current.classList.add(
+          'bg-opacity-80',
+          '!h-16',
+          'transition-all',
+          'backdrop-blur-sm'
+        )
       } else {
-        scrollRef.current.classList.remove('bg-opacity-80')
+        scrollRef.current.classList.remove(
+          'bg-opacity-80',
+          '!h-16',
+          'transition-all',
+          'backdrop-blur-sm'
+        )
       }
     })
     return () => {
@@ -35,8 +45,14 @@ const AdminHeader = () => {
   return (
     <header
       ref={scrollRef}
-      className="bg-[#f4f6f8] md:w-[calc(100%_-_280px)] fixed left-auto top-0 right-0 px-10 h-20 header z-10 scroll:"
+      className="bg-[#f4f6f8] w-full backdrop:blur-sm xl:w-[calc(100%_-_280px)] fixed left-auto top-0 right-0 px-4 xl:px-9 h- h-20 header z-10 flex justify-between items-center xl:block"
     >
+      <button
+        className="block xl:hidden p-1 rounded-full hover:bg-gray-200"
+        onClick={onSidebarOpen}
+      >
+        <BiMenuAltRight className="text-gray-600 text-3xl" />
+      </button>
       <div className="flex justify-end h-full items-center">
         <div className="group relative">
           <button className=" inline-block p-2 group-hover:bg-gray-200 group-hover:rounded-full group-hover:scale-105 transition-transform">

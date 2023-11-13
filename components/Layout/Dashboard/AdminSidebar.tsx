@@ -50,14 +50,21 @@ interface IUser {
   email: string
 }
 
-const AdminSidebar = () => {
+const AdminSidebar = ({
+  openSidebar,
+  onCloseSidebar,
+}: {
+  openSidebar: boolean
+  onCloseSidebar: () => void
+}) => {
   const user: IUser | undefined = useQueryClient().getQueryData(['getUser'])
   const router = useRouter()
-  console.log(router)
 
   return (
     <div
-      className={`bg-[#f4f6f8] py-3 px-5 min-h-full scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 overflow-y-auto w-[280px] border-r-[1px] border-dashed border-[#919eab3d]`}
+      className={`bg-[#f4f6f8] py-3 px-5  h-full scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-300 overflow-y-auto w-[280px] border-r-[1px] border-dashed border-[#919eab3d]  transition-all duration-300 xl:transition-none fixed top-0 xl:left-0 z-30 ${
+        openSidebar == true ? 'left-0' : '-left-[280px]'
+      } `}
     >
       <Image
         src={require('@/assets/BeuStore_logo.png')}
