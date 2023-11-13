@@ -1,101 +1,147 @@
-import React from 'react'
 import dynamic from 'next/dynamic'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
-type TChart = {
-  color1: string
-  color2: string
-  dataSeries: number[]
-}
-
-const AreaChart = ({ color1, color2, dataSeries }: TChart) => {
-  const generateColors = (data: number[]) => {
-    return data.map((d, idx) => {
-      let color = d < 50 ? color1 : color2
-
-      return {
-        offset: (idx / data.length) * 114,
-        color,
-        opacity: 0.9,
-      }
-    })
-  }
+const AreaChart = () => {
   return (
-    <div className="">
+    <div className="mt-3 mx-3 lg:mt-6 lg:mx-6">
       <Chart
         options={{
-          dataLabels: { enabled: false },
+          dataLabels: {
+            enabled: false,
+          },
+          colors: ['#118D57', '#FFAB00'],
           chart: {
-            toolbar: {
-              show: false,
-            },
-
-            sparkline: { enabled: true },
+            zoom: { enabled: false },
+            toolbar: { show: false },
+            sparkline: { enabled: false },
           },
-          tooltip: {
-            fixed: { enabled: false },
-            x: {
-              show: false,
-            },
-            y: {
-              title: {
-                formatter: function (seriesName) {
-                  return ''
-                },
-              },
-            },
-            marker: { show: false },
-          },
-
-          grid: {
-            show: false,
-          },
-          legend: { show: false },
-          markers: {
-            size: 0,
-            colors: color1,
-            strokeColors: '',
-            strokeWidth: 2,
-            strokeOpacity: 0.9,
-            strokeDashArray: 0,
-            fillOpacity: 1,
-            discrete: [],
-            shape: 'circle',
-            radius: 2,
-            offsetX: 0,
-            offsetY: 0,
-            onClick: undefined,
-            onDblClick: undefined,
-            showNullDataPoints: true,
-            hover: {
-              size: 6,
-              sizeOffset: 3,
-            },
-          },
-          fill: {
-            type: 'gradient',
-            gradient: {
-              shadeIntensity: 1,
-              opacityFrom: 1,
-              opacityTo: 1,
-              colorStops: generateColors(dataSeries),
-            },
-          },
+          markers: { strokeDashArray: 3 },
           stroke: {
-            width: 3.5,
             curve: 'smooth',
           },
+
+          // xaxis
+          xaxis: {
+            type: 'category',
+            categories: [
+              'Tháng 1',
+              'Tháng 2',
+              'Tháng 3',
+              'Tháng 4',
+              'Tháng 5',
+              'Tháng 6',
+              'Tháng 7',
+              'Tháng 8',
+              'Tháng 9',
+              'Tháng 10',
+              'Tháng 11',
+              'Tháng 12',
+            ],
+            axisBorder: { show: false },
+            axisTicks: { show: false },
+            labels: {
+              style: {
+                colors: '#637381',
+              },
+            },
+          },
+
+          //yaxis
+          yaxis: {
+            labels: {
+              style: {
+                colors: '#637381',
+              },
+            },
+          },
+          //tooltip
+          tooltip: {
+            x: {
+              show: true,
+            },
+          },
+
+          // legend
+          legend: {
+            fontSize: '13',
+            position: 'top',
+            horizontalAlign: 'right',
+            fontWeight: 500,
+            markers: {
+              radius: 12,
+            },
+            offsetY: -20,
+          },
+
+          // fill
+          fill: {
+            opacity: 1,
+            gradient: {
+              type: 'vertical',
+              shadeIntensity: 0,
+              opacityFrom: 0.5,
+              opacityTo: 0,
+              stops: [0, 100],
+            },
+          },
+
+          // title
+          title: {
+            text: 'Doanh số bán hàng',
+
+            style: {
+              fontSize: '20',
+              fontWeight: '600',
+              fontFamily: "'Public Sans', sans-serif",
+            },
+          },
+
+          //subtitle
+          subtitle: {
+            text: '+43% so với năm ngoái',
+            style: {
+              fontSize: '14',
+              color: '#637381',
+            },
+          },
+          states: {
+            hover: {
+              filter: {
+                type: 'lighten',
+                value: 0.04,
+              },
+            },
+            active: {
+              filter: {
+                type: 'darken',
+                value: 0.88,
+              },
+            },
+          },
+
+          // Grid
+          grid: {
+            strokeDashArray: 3,
+            // borderColor: theme.palette.divider,
+            xaxis: {
+              lines: {
+                show: false,
+              },
+            },
+          },
         }}
-        //series={[{ data: [30, 4, 54, 6, 7, 300] }]}
         series={[
           {
-            data: dataSeries,
+            name: 'Sản phẩm đã bán',
+            data: [31, 40, 28, 51, 42, 109, 100, 12, 43, 1, 344, 633],
+          },
+          {
+            name: 'Doanh thu',
+            data: [11, 32, 45, 32, 34, 52, 41, 324, 2, 223, 32, 124],
           },
         ]}
-        type="line"
-        width={'96'}
-        height={'64'}
+        type="area"
       />
     </div>
   )
