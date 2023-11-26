@@ -1,7 +1,9 @@
 
 import axios from "axios";
 import queryString from "query-string";
-import { getCookie, setCookie } from 'cookies-next';
+import { getCookie, removeCookies, setCookie } from 'cookies-next';
+import { Router } from "next/router";
+import { NextRequest, NextResponse } from "next/server";
 
 
 // Set up default config for http requests here
@@ -28,6 +30,10 @@ axiosClient.interceptors.request.use(async (config) => {
     return newConfig;
 });
 
+let isRefreshing = false;
+
+
+
 axiosClient.interceptors.response.use((response) => {
     if (response) {
         return response;
@@ -35,25 +41,43 @@ axiosClient.interceptors.response.use((response) => {
 
     return response;
 }, async (error) => {
+
        const originalConfig = error.config;
 
-    if (originalConfig.url !== "/auth/login" && error.response) {
+  if (originalConfig.url !== "/auth/login" && error.response) {
+      
       // Access Token was expired
-      if (error.response.status === 401 && !originalConfig._retry) {
-        originalConfig._retry = true;
-
-        try {
-          const res = await axiosClient.post("auth/refresh-token", {
-              accessToken: getCookie("accessToken"),
-              refreshToken: getCookie("refreshToken"),
-          });
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data?.data?.accessToken;
-        setCookie('accessToken', res.data?.data?.accessToken)
-        setCookie('refreshToken', res.data?.data?.refreshToken)
-
-          return axiosClient(originalConfig);
-        } catch (_error) {
-          return Promise.reject(_error);
+      if (error.response.status === 401 && originalConfig && !originalConfig.sent) {
+         originalConfig.sent = true;
+        if (!isRefreshing) {
+        isRefreshing = true;
+       
+          
+          return await axiosClient.post("auth/refresh-token", {
+                accessToken: getCookie("accessToken"),
+                refreshToken: getCookie("refreshToken"),
+          }).then((res) => {
+           
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data?.data?.accessToken;
+            setCookie('accessToken', res.data?.accesstoken)
+            setCookie('refreshToken', res.data?.refreshToken)
+    
+              return axiosClient(originalConfig);
+          }).catch((error) => {
+           
+            removeCookies("accessToken");
+            removeCookies("refreshToken");
+             window.location.href = '/auth/login';
+            }).finally(()=> isRefreshing = false);
+        } 
+        else {
+          return new Promise((resovle) => {
+           
+            removeCookies("accessToken");
+            removeCookies("refreshToken");
+             window.location.href = '/auth/login';
+         
+          })
         }
       }
     }

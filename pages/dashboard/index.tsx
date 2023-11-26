@@ -48,16 +48,6 @@ const Data_Demo = [
 const Dashboard = () => {
   const [dataChart, setDataChart] = React.useState([])
 
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ['getCategories'],
-    queryFn: async () => {
-      const { data } = await axiosClient.get('categories')
-      if (data) {
-        return data
-      }
-    },
-  })
-
   return (
     <AdminLayout>
       <Meta title="Quản trị | BeuStore" description="Admin" />
@@ -248,3 +238,19 @@ export default Dashboard
 //     props: {},
 //   }
 // }
+
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  let token = req.cookies['accessToken']
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/',
+      },
+      props: {},
+    }
+  }
+  return {
+    props: {},
+  }
+}

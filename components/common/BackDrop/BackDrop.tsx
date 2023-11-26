@@ -9,7 +9,7 @@ const BackDrop = ({ openBackDrop, onCloseSidebar }: TBackDrop) => {
   return (
     <div
       className={`fixed bg-black bg-opacity-40 inset-0 w-full h-full z-20 hidden ${
-        openBackDrop && '!block '
+        openBackDrop == true ? '!block ' : ''
       }`}
       onClick={onCloseSidebar}
     ></div>

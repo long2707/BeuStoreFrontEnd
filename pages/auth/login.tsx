@@ -56,7 +56,6 @@ const Login = () => {
       return await axiosClient.post('auth/login', formBody)
     },
     onSuccess: (data) => {
-      console.log(data)
       setCookie('accessToken', data?.data?.accessToken)
       setCookie('refreshToken', data?.data?.refreshToken)
 
@@ -157,7 +156,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   if (token) {
     return {
       redirect: {
-        destination: '/admin/dashboard',
+        destination: '/dashboard',
       },
       props: {},
     }

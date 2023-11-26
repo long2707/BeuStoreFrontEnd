@@ -1,17 +1,33 @@
+import jwtDecode from "jwt-decode";
 import { NextRequest, NextResponse } from "next/server";
 
 
-function withAuth (req: NextRequest) {
-    let token = req.cookies.get("accessToken");
+function withAuth(req: NextRequest) {
     
-    if (!token) {
-        return NextResponse.redirect(new URL("/auth/login", req.url));
+    let token: any = req.cookies.get("accessToken");
+    try {
+        if (token) {
+            let getUser: any = jwtDecode(token)
+           
+            
+            if(Date.now() > getUser?.exp) return NextResponse.redirect(new URL("/auth/login", req.url));
+            if (getUser?.role == "admin") {
+                return NextResponse.next();
+            }
+                return NextResponse.redirect(new URL("/auth/login", req.url));
+        }
+    
+
+            return NextResponse.redirect(new URL("/auth/login", req.url));
+    } catch (error) {
+        console.log(error) 
     }
-    return NextResponse.next();
+
+   
 }
 
 export const config = {
-    matcher: "/admin/:path*" 
+    matcher: "/dashboard/:path*" 
 };
 
 export default withAuth;

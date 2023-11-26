@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import AdminHeader from './AdminHeader'
 import AdminSidebar from './AdminSidebar'
 
@@ -17,11 +17,20 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         return data?.data?.data
       }
     },
+    cacheTime: Infinity,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
   })
-
-  // if (isLoading) {
-  //   return <h1> loading...</h1>
-  // }
+  // const { data, isError, isLoading } = useQuery({
+  //   queryKey: ['getCategories'],
+  //   queryFn: async () => {
+  //     const { data } = await axiosClient.get('categories')
+  //     if (data) {
+  //       return data
+  //     }
+  //   },
+  // })
+  if (isLoading) return <h1>Loading</h1>
   return (
     <>
       <div className="min-h-0 h-full">
@@ -39,6 +48,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
               document.body.style.overflow = 'auto'
             }}
           />
+
           <main className="bg-[#f4f6f8] w-full xl:w-[calc(100%_-_280px)]  xl:relative xl:left-[280px] pt-[80px] px-4 xl:px-9">
             {children}
           </main>

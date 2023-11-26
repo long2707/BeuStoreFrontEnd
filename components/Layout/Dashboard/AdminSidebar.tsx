@@ -90,6 +90,9 @@ const AdminSidebar = ({
           <Link
             href={item?.path}
             key={item?.title}
+            onClick={() => {
+              document.body.style.overflow = 'auto'
+            }}
             className={`flex items-center text-[#637381] font-normal px-5 py-3 mb-1 transition-colors rounded-lg  hover:bg-[#00ab5514] ${
               router.pathname == item.path
                 ? '!text-[#00AB55] !font-medium bg-[#00ab5514]'
