@@ -38,7 +38,7 @@ const AdminHeader = ({ onSidebarOpen }: { onSidebarOpen: () => void }) => {
       }
     })
     return () => {
-      window.removeEventListener('scroll', () => {})
+      window.removeEventListener('scroll', () => {}, true)
     }
   }, [])
 

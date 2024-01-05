@@ -7,6 +7,9 @@ import { FaBlogger } from 'react-icons/fa'
 import { FiShoppingBag } from 'react-icons/fi'
 import { BiCreditCard, BiSlideshow } from 'react-icons/bi'
 import { useQueryClient } from '@tanstack/react-query'
+import appRoutes from '@/configs/configRoutes'
+import SidebarItemCollapes from './SidebarItemCollapes'
+import SidebarItem from './SidebarItem'
 
 interface IMenuSidebar {
   title: string
@@ -86,23 +89,17 @@ const AdminSidebar = ({
         </div>
       </>
       <div className="mt-10">
-        {MenuSidebar.map((item) => (
-          <Link
-            href={item?.path}
-            key={item?.title}
-            onClick={() => {
-              document.body.style.overflow = 'auto'
-            }}
-            className={`flex items-center text-[#637381] font-normal px-5 py-3 mb-1 transition-colors rounded-lg  hover:bg-[#00ab5514] ${
-              router.pathname == item.path
-                ? '!text-[#00AB55] !font-medium bg-[#00ab5514]'
-                : ''
-            }`}
-          >
-            <span className="text-[24px] mr-4">{item?.icon}</span>
-            <span className="text-sm capitalize">{item?.title}</span>
-          </Link>
-        ))}
+        {appRoutes?.map((route) =>
+          route?.Child ? (
+            <React.Fragment key={route.state}>
+              <SidebarItemCollapes {...route} />
+            </React.Fragment>
+          ) : (
+            <React.Fragment key={route.state}>
+              <SidebarItem {...route} />
+            </React.Fragment>
+          )
+        )}
       </div>
     </div>
   )

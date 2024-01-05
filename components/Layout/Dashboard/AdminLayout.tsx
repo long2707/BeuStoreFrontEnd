@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import AdminHeader from './AdminHeader'
-import AdminSidebar from './AdminSidebar'
+import AdminSidebar from './Sidebar/AdminSidebar'
 
 import axiosClient from '@/libs/axiosClient'
 import { useQuery } from '@tanstack/react-query'
