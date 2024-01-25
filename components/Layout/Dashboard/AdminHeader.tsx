@@ -15,30 +15,30 @@ const AdminHeader = ({ onSidebarOpen }: { onSidebarOpen: () => void }) => {
   const user: IUser | undefined = useQueryClient().getQueryData(['getUser'])
 
   const scrollRef = React.useRef() as MutableRefObject<HTMLDivElement>
-
+  const isSticky = ()=>{
+    if (
+      document.body.scrollTop > 80 ||
+      document.documentElement.scrollTop > 80
+    ) {
+      scrollRef.current.classList.add(
+        'bg-opacity-80',
+        '!h-16',
+        'transition-all',
+        'backdrop-blur-sm'
+      )
+    } else {
+      scrollRef.current.classList.remove(
+        'bg-opacity-80',
+        '!h-16',
+        'transition-all',
+        'backdrop-blur-sm'
+      )
+    }
+  }
   React.useEffect(() => {
-    window.addEventListener('scroll', () => {
-      if (
-        document.body.scrollTop > 80 ||
-        document.documentElement.scrollTop > 80
-      ) {
-        scrollRef.current.classList.add(
-          'bg-opacity-80',
-          '!h-16',
-          'transition-all',
-          'backdrop-blur-sm'
-        )
-      } else {
-        scrollRef.current.classList.remove(
-          'bg-opacity-80',
-          '!h-16',
-          'transition-all',
-          'backdrop-blur-sm'
-        )
-      }
-    })
+    window.addEventListener('scroll', isSticky)
     return () => {
-      window.removeEventListener('scroll', () => {})
+      window.removeEventListener('scroll', isSticky)
     }
   }, [])
 
